@@ -28,6 +28,7 @@
                 android:contentDescription="@string/imagem_da_nota"
                 android:visibility="@{nota.imagemUrl.isEmpty() ? View.GONE : View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:carregaImagem="@{nota.imagemUrl}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

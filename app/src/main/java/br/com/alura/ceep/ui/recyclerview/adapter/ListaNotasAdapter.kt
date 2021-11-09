@@ -2,10 +2,9 @@ package br.com.alura.ceep.ui.recyclerview.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
@@ -15,7 +14,6 @@ import br.com.alura.ceep.BR
 import br.com.alura.ceep.R
 import br.com.alura.ceep.model.Nota
 import br.com.alura.ceep.ui.extensions.carregaImagem
-import kotlinx.android.synthetic.main.item_nota.view.*
 
 class ListaNotasAdapter(
     private val context: Context,
@@ -24,7 +22,8 @@ class ListaNotasAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
-        val viewDataBinding: Any = DataBindingUtil.inflate(inflater, R.layout.item_nota, parent, false)
+        val viewDataBinding: Any =
+            DataBindingUtil.inflate(inflater, R.layout.item_nota, parent, false)
         return ViewHolder(viewDataBinding as ViewDataBinding)
     }
 
@@ -34,12 +33,10 @@ class ListaNotasAdapter(
         }
     }
 
-    inner class ViewHolder(private var viewDataBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewDataBinding.root) {
+    inner class ViewHolder(private var viewDataBinding: ViewDataBinding) :
+        RecyclerView.ViewHolder(viewDataBinding.root) {
 
         private lateinit var nota: Nota
-        private val campoImagem: ImageView by lazy {
-            itemView.item_nota_imagem
-        }
 
         init {
             itemView.setOnClickListener {
@@ -52,15 +49,13 @@ class ListaNotasAdapter(
         fun vincula(nota: Nota) {
             this.nota = nota
             viewDataBinding.setVariable(BR.nota, nota)
-
-            campoImagem.carregaImagem(nota.imagemUrl)
-            if (nota.imagemUrl.isEmpty()) {
-                campoImagem.visibility = GONE
-            } else {
-                campoImagem.visibility = VISIBLE
-            }
         }
 
+    }
+
+    @BindingAdapter("carregaImagem")
+    fun carregaImagemViaUrl(view: ImageView, url: String) {
+        view.carregaImagem(url)
     }
 
 }
